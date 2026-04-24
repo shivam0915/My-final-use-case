@@ -1,6 +1,6 @@
 {
   "metrics": {
-    "namespace": "Thala",
+    "namespace": "Company",
     "metrics_collected": {
       "cpu": {
         "measurement": [
