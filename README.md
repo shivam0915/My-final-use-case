@@ -183,7 +183,7 @@ Use this checklist to confirm that your monitoring pipeline is working end-to-en
 
 Stress test examples:
 docker exec -d <container_id> sh -c "yes > /dev/null"
-docker exec -it <container_id> sh -c "apk add --no-cache stress-ng || apt-get update && apt-get install -y stress-ng"
+docker exec -it <container_id> yum install -y stress-ng
 docker exec -d <container_id> stress-ng --vm 1 --vm-bytes 500M --timeout 600s
 
 
