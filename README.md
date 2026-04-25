@@ -98,7 +98,6 @@ sudo /opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-ctl -a status
 
 Docker Container Metrics Script
 Create docker_metrics.sh:
-cat << 'EOF' > docker_metrics.sh
 #!/bin/bash
 
 CONTAINER_IDS=$(docker ps -q)
@@ -120,7 +119,7 @@ do
     echo "Error: Could not retrieve stats for $id"
   fi
 done
-EOF
+
 
 Make executable:
 chmod +x docker_metrics.sh
@@ -129,26 +128,35 @@ chmod +x docker_metrics.sh
 Run manually:
 ./docker_metrics.sh
 
-utomate with Cron
+Automate with Cron
 Install cron:
 sudo yum install -y cronie
-
 
 Edit crontab:
 crontab -e
 
-
-
 Add entry to run every minute:
 * * * * * /home/ec2-user/docker_metrics.sh
 
+## 📊 Metrics in CloudWatch
 
+CloudWatch will display both **host-level** and **container-level** metrics once the agent and script are running correctly.
 
+### 1. Host Metrics (namespace: `CWAgent`)
+- **CPU**:  
+  - `cpu_usage_idle`  
+  - `cpu_usage_user`
+- **Memory**:  
+  - `mem_used_percent`
+- **Disk**:  
+  - `disk_used_percent` (reported per partition with dimensions like `device`, `fstype`, `path`, `host`)
 
-Metrics in CloudWatch
-|  |  |  |  | 
-|  |  | cpu_usage_idlecpu_usage_usermem_used_percentdisk_used_percent |  | 
-|  |  | DockerCPUUtilizationDockerMEMUtilization |  | 
+### 2. Docker Container Metrics (namespace: `Final-USE-CASE`)
+- **CPU Utilization**:  
+  - `DockerCPUUtilization` (dimension: `CONTAINER_ID`)
+- **Memory Utilization**:  
+  - `DockerMEMUtilization` (dimension: `CONTAINER_ID`)
+
 
 
 
@@ -159,12 +167,18 @@ Metrics in CloudWatch
 - EC2 CPU & Memory utilization
 - Docker container CPU & Memory utilization
 - Disk usage per partition
-Validation Checklist
-|  |  |  | 
-|  | ./docker_metrics.sh |  | 
-|  | Final-USE-CASE |  | 
-|  |  |  | 
-|  |  |  | 
+
+## 🧪 Validation Checklist
+
+Use this checklist to confirm that your monitoring pipeline is working end-to-end:
+
+1. **Run the metrics script**
+   - Command: `./docker_metrics.sh`
+   - Expected: Output shows metrics pushed for each container (CPU and MEM values).
+
+2. **Verify metrics in CloudWatch**
+   - Navigate: **CloudWatch → Metrics → Final-USE-CASE**
+   - Expected: Container IDs appear as dimensions with CPU and MEM metrics.
 
 
 Stress test examples:
