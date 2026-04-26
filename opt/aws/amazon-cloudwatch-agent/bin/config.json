@@ -1,6 +1,6 @@
 {
   "metrics": {
-    "namespace": "Company",
+    "namespace": "Docker-Container",
     "metrics_collected": {
       "cpu": {
         "measurement": [
