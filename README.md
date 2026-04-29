@@ -146,6 +146,7 @@ systemctl start crond
 systemctl enable crond
 systemctl status crond
 
+sudo journalctl -u crond -f
 
 ## 📊 Metrics in CloudWatch
 
