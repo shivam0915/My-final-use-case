@@ -66,6 +66,7 @@ sudo yum install -y amazon-cloudwatch-agent
 Create /opt/aws/amazon-cloudwatch-agent/bin/config.json:
 {
   "metrics": {
+    "namespace": "Final-USE-CASE",
     "metrics_collected": {
       "cpu": {
         "measurement": ["cpu_usage_idle", "cpu_usage_user"],
