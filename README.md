@@ -107,7 +107,7 @@ do
   CPU=$(docker stats --no-stream --format "{{.CPUPerc}}" $id | tr -d "%")
   MEM=$(docker stats --no-stream --format "{{.MemPerc}}" $id | tr -d "%")
 
-  if [[ ! -z "$CPU" && ! -z "$MEM" ]]; then
+ if [[ ! -z "$CPU" ]] && [[ ! -z "$MEM" ]];  then
     aws cloudwatch put-metric-data --namespace "Final-USE-CASE" \
       --metric-name "DockerCPUUtilization" --value $CPU --dimensions CONTAINER_ID=$id
 
