@@ -139,6 +139,14 @@ crontab -e
 Add entry to run every minute:
 * * * * * /home/ec2-user/docker_metrics.sh
 
+Some validatios steps:
+1. Check crond is start and enable
+if not:
+systemctl start crond
+systemctl enable crond
+systemctl status crond
+
+
 ## 📊 Metrics in CloudWatch
 
 CloudWatch will display both **host-level** and **container-level** metrics once the agent and script are running correctly.
@@ -184,7 +192,12 @@ Use this checklist to confirm that your monitoring pipeline is working end-to-en
 
 Stress test examples:
 docker exec -d <container_id> sh -c "yes > /dev/null"
-docker exec -it <container_id> yum install -y stress-ng
+Here for memroy:
+first check linux dirstro.
+then: apt-get update
+apt-get install -y stress-ng
+
+docker exec -it <container_id> 
 docker exec -d <container_id> stress-ng --vm 1 --vm-bytes 500M --timeout 600s
 
 
