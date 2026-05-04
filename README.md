@@ -107,7 +107,7 @@ for id in $CONTAINER_IDS
 do
   CPU=$(docker stats --no-stream --format "{{.CPUPerc}}" $id | tr -d "%")
   MEM=$(docker stats --no-stream --format "{{.MemPerc}}" $id | tr -d "%")
-    #Check if both CPU and MEM variables are NOT empty
+    
     # -z means "string is empty"
     # ! -z means "string is NOT empty"
 
